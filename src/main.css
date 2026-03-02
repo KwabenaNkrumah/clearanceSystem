@@ -1,0 +1,78 @@
+:root {
+  --primary-color: #800000;
+  --dark-primary: #660000;
+  --secondary-color: #28a745;
+  --tertiary-color: #ffc107;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.bgPrimary {
+  background-color: var(--primary-color);
+}
+.bgSecondary {
+  background-color: var(--secondary-color);
+}
+.bgTertiary {
+  background-color: var(--tertiary-color);
+}
+.bgDarkPrimary {
+  background-color: var(--dark-primary);
+}
+.txtPrimary {
+  color: var(--primary-color);
+}
+.txtSecondary {
+  color: var(--secondary-color);
+}
+.custom-bullet-color::marker {
+  color: var(--primary-color);
+}
+.close {
+  margin-left: -15rem;
+}
+.bgDarkPrimary,
+.bgTertiary,
+.bgSecondary,
+.bgPrimary,
+.bgDarkPrimary:hover,
+.bgPrimary:hover,
+.bgSecondary:hover,
+.bgTertiary:hover {
+  color: white;
+}
+
+.bgPrimary:hover,
+.bgPrimary:focus,
+.bgPrimary:active {
+  background-color: var(--primary-color);
+}
+.bgTertiary:hover,
+.bgTertiary:focus,
+.bgTertiary:active {
+  background-color: var(--tertiary-color);
+}
+.bgSecondary:hover,
+.bgSecondary:focus,
+.bgSecondary:active {
+  background-color: var(--secondary-color);
+}
+.bgDarkPrimary:hover,
+.bgDarkPrimary:focus,
+.bgDarkPrimary:active {
+  background-color: var(--dark-primary);
+}
+
+.form-check-input:checked {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+.form-control:focus {
+  border-color: var(--tertiary-color);
+  box-shadow: 0 0 0.25rem var(--tertiary-color);
+  outline: 0 none;
+}
