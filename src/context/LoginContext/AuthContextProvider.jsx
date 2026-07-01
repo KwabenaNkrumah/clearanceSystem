@@ -1,5 +1,5 @@
 import AuthContext from "./AuthContext.js";
-import { students } from "../../../../data.js";
+import { students, clearanceRequests } from "../../../../data.js";
 import { useReducer } from "react";
 function reducer(state, action) {
   switch (action.type) {
@@ -12,29 +12,33 @@ function reducer(state, action) {
         return {
           ...state,
           isAuth: false,
-          message: "Provide valid Credentials",
+          errorMessage: "Provide valid Credentials",
         };
       }
 
       let student = students.find(
-        (st) => st.indexNumber === Number(userIndexNumber),
+        (st) => st?.indexNumber === Number(userIndexNumber),
       );
       if (!student || student.password !== userPassword) {
         console.log("Provide valid Credentials");
         return {
           ...state,
           isAuth: false,
-          message: "Provide valid Credentials",
+          errorMessage: "Provide valid Credentials",
         };
       }
+      const alreadyRequested = clearanceRequests.some(
+        (cr) => student.indexNumber === cr.indexNumber,
+      );
       state = {
         ...state,
         studentName: student.name,
         studentIndexNumber: student.indexNumber,
         owingFees: student.fees > 0,
         isAuth: true,
-        message: "",
+        errorMessage: "",
         fees: student.fees,
+        alreadyRequested,
       };
       console.log(state);
       return state;
@@ -43,8 +47,10 @@ function reducer(state, action) {
         ...state,
         isAuth: false,
         studentName: "",
-        message: "",
+        errorMessage: "",
         owingFees: true,
+        studentIndexNumber: 0,
+        alreadyRequested: false,
       };
     default:
       return state;
@@ -54,7 +60,10 @@ let defaultState = {
   studentName: "",
   owingFees: true,
   isAuth: false,
-  message: "",
+  errorMessage: "",
+  studentIndexNumber: 0,
+  fees: 0,
+  alreadyRequested: false,
 };
 function AuthContextProvider(props) {
   const [state, dispatch] = useReducer(reducer, defaultState);
