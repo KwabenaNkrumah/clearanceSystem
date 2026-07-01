@@ -26,7 +26,7 @@ function LogInpage(props) {
 
   useEffect(() => {
     if (ctx.state.isAuth) {
-      navigate("/clearancepage", { replace: true });
+      navigate("/student/requestpage", { replace: true });
     }
   }, [ctx.state.isAuth, navigate]);
 
@@ -70,7 +70,10 @@ function LogInpage(props) {
               />
             </div>
           </div>
-          <p className="text-danger fw-bold">{ctx.state.message}</p>
+          {ctx.state.errorMessage && (
+            <p className="text-danger fw-bold">{ctx.state.errorMessage}</p>
+          )}
+
           <hr />
           <Button name="LogIn" className="bgPrimary w-100" type="submit" />
         </form>

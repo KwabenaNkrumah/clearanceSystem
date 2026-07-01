@@ -8,6 +8,7 @@ function Checkbox(props) {
         value={props.name}
         checked
         className="form-check-input me-2"
+        ref={props.ref}
       />
       <label htmlFor={props.name} className="txtPrimary">
         {props.name}

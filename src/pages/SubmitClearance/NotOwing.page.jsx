@@ -1,9 +1,34 @@
+import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button/Button.component";
 import Checkbox from "../../components/checkbox/Checkbox.component";
 import Heading from "../../components/Heading/Heading.component";
+import AuthContext from "../../context/LoginContext/AuthContext";
+import RequestClearanceContext from "../../context/RequestClearanceContext/RequestClearanceContext";
 import warningLogo from "./../../assets/correct.png";
 
+import { useContext, useEffect, useRef } from "react";
+
 function NotOwingPage() {
+  let navigate = useNavigate();
+  let accountsRef = useRef();
+  let libraryRef = useRef();
+  let hostelRef = useRef();
+  const requestCtx = useContext(RequestClearanceContext);
+  const {
+    state: { studentIndexNumber },
+  } = useContext(AuthContext);
+
+  function submitClearanceRequestHandler(e) {
+    e.preventDefault();
+    let accounts = accountsRef.current.checked && accountsRef.current.value;
+    let library = libraryRef.current.checked && libraryRef.current.value;
+    let hostel = hostelRef.current.checked && hostelRef.current.value;
+
+    requestCtx.submitClearance([accounts, library, hostel], studentIndexNumber);
+
+    navigate("/student/checkstatus", { replace: true });
+  }
+
   return (
     <section>
       <Heading title="Apply for Clearance" />
@@ -18,14 +43,19 @@ function NotOwingPage() {
           </div>
         </div>
         <h5 className="my-3">Complete the following clearance requirement</h5>
-        <form>
+
+        <form onSubmit={submitClearanceRequestHandler}>
           <section className="bg-light custom-bullet-color rounded-2 border">
-            <Checkbox name="Accounts" />
-            <Checkbox name="Library" />
-            <Checkbox name="Hostel" />
+            <Checkbox name="Accounts" ref={accountsRef} />
+            <Checkbox name="Library" ref={libraryRef} />
+            <Checkbox name="Hostel" ref={hostelRef} />
           </section>
           <div className="d-flex justify-content-center mt-4">
-            <Button name="Submit Clearance Request" className="bgPrimary" />
+            <Button
+              name="Submit Clearance Request"
+              className="bgPrimary"
+              type="submit"
+            />
           </div>
         </form>
       </div>
